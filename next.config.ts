@@ -1,7 +1,20 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    appDir: true,
+    serverComponentsExternalPackages: ['mongoose'],
+  },
+  images: {
+    domains: ['lh3.googleusercontent.com'],
+  },
+  // @ts-ignore
+  webpack(config) {
+    config.experiments = {
+      ...config.experiments,
+      topLevelAwait: true,
+    };
+    return config;
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

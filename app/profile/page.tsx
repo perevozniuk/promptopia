@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Profile from '@components/Profile';
-import { PromptType } from '@app/api/prompt/route';
+import { PostType } from '@types/post';
+
 
 const MyProfile = () => {
   const router = useRouter();
@@ -24,18 +25,18 @@ const MyProfile = () => {
     if (session?.user.id) fetchPosts();
   }, [session?.user.id]);
 
-  const handleEdit = (post: PromptType) => {
+  const handleEdit = (post: PostType) => {
     router.push(`/update-prompt?id=${post._id}`);
   };
 
-  const handleDelete = async (post: PromptType) => {
+  const handleDelete = async (post: PostType) => {
     const hasConfirmed = confirm(
       'Are you sure you want to delete this prompt?',
     );
 
     if (hasConfirmed) {
       try {
-        await fetch(`/api/prompt/${post._id.toString()}`, {
+        await fetch(`/api/prompt/${post?._id?.toString()}`, {
           method: 'DELETE',
         });
 

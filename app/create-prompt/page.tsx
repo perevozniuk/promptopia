@@ -5,15 +5,16 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import Form from '@components/Form';
+import { PostType } from '@types/post';
 
 const CreatePrompt = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
   const [submitting, setIsSubmitting] = useState(false);
-  const [post, setPost] = useState({ prompt: '', tag: '' });
+  const [post, setPost] = useState<PostType>({ prompt: '', tag: '' });
 
-  const createPrompt = async (e) => {
+  const createPrompt = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -22,7 +23,7 @@ const CreatePrompt = () => {
         method: 'POST',
         body: JSON.stringify({
           prompt: post.prompt,
-          userId: session?.user.id,
+          userId: session?.user?.id,
           tag: post.tag,
         }),
       });
@@ -31,9 +32,8 @@ const CreatePrompt = () => {
         router.push('/');
       }
     } catch (error) {
-      console.log(error);
     } finally {
-      setIsSubmitting(false);
+      // setIsSubmitting(false);
     }
   };
 

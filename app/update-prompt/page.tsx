@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import Form from '@components/Form';
@@ -27,7 +27,7 @@ const UpdatePrompt = () => {
     if (promptId) getPromptDetails();
   }, [promptId]);
 
-  const updatePrompt = async (e) => {
+  const updatePrompt = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 

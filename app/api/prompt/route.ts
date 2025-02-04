@@ -1,18 +1,15 @@
 import { connectToDatabase } from '@utils/database';
 import Prompt from '@models/prompt';
+import { PostType } from '@types/post';
 
-export type PromptType = {
-  creator: string,
-  tag: string,
-  prompt: string,
-}
 
-export const GET = async (): Promise<PromptType[] | undefined> => {
+export const GET = async () => {
   try {
     await connectToDatabase();
-    const prompts: PromptType[] = await Prompt.find({}).populate('creator');
+    const prompts: PostType[] = await Prompt.find({}).populate('creator');
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {
+    console.log(error);
     new Response('Failed to fetch all prompts', { status: 500 });
   }
 };
